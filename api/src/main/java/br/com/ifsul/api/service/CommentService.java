@@ -16,12 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * REQ010: comentar em publicações de outro usuário.
- * REQ011: excluir comentários feitos no seu perfil (na sua publicação).
- * REQ013: excluir comentários que ele mesmo realizou.
- * RNF013: só pode excluir o próprio comentário OU comentários feitos na sua publicação.
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor

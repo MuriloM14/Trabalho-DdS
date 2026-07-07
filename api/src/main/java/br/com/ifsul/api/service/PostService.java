@@ -14,10 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * REQ008: criar publicações.
- * REQ012: excluir publicação própria.
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor

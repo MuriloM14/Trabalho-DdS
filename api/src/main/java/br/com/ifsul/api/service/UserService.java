@@ -8,9 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * REQ009: usuário deve poder visitar perfis de outros usuários.
- */
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

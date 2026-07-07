@@ -8,9 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    // RNF006: listagem paginada
     Page<Book> findByUserId(Long userId, Pageable pageable);
 
-    // REQ004: categorizar por status
     Page<Book> findByUserIdAndStatus(Long userId, BookStatus status, Pageable pageable);
 }

@@ -23,12 +23,10 @@ public class Comment {
     @Column(nullable = false, length = 1000)
     private String conteudo;
 
-    // Autor do comentário (quem escreveu)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id", nullable = false)
     private User autor;
 
-    // Publicação em que o comentário foi feito
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;

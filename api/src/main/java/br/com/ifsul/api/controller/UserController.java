@@ -16,7 +16,6 @@ public class UserController {
 
     private final UserService userService;
 
-    // REQ009: visitar perfil de outros usuários
     @GetMapping("/{id}")
     public ResponseEntity<UserProfileResponse> getProfile(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getProfile(id));

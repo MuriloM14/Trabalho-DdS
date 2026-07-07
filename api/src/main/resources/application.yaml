@@ -22,6 +22,5 @@ server:
 
 app:
   jwt:
-    # Em produção, mover para variável de ambiente
     secret: "MinhaChaveSecretaSuperLongaParaAssinarTokensJWTComSeguranca123456"
-    expiration-ms: 86400000 # 24 horas
+    expiration-ms: 86400000

@@ -6,9 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * DTO usado para exibir o perfil de outro usuário (REQ009), sem dados sensíveis.
- */
 @Data
 @Builder
 @NoArgsConstructor

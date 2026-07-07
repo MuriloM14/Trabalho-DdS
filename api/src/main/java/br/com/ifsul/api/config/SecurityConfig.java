@@ -21,12 +21,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
-/**
- * RNF001 / RNF002 / RNF004: autenticação stateless via JWT, rotas protegidas,
- * senha criptografada com BCrypt e proteção padrão do Spring Security contra
- * ataques comuns (a proteção a SQL Injection vem do uso de JPA/Hibernate com
- * queries parametrizadas em toda a aplicação).
- */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -89,3 +83,4 @@ public class SecurityConfig {
         return source;
     }
 }
+

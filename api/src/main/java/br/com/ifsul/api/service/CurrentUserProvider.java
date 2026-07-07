@@ -8,9 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-/**
- * Resolve o usuário autenticado atual a partir do contexto de segurança (token JWT validado).
- */
 @Component
 @RequiredArgsConstructor
 public class CurrentUserProvider {

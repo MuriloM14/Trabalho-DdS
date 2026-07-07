@@ -12,9 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * Tratamento centralizado de erros (RNF009: mensagens amigáveis ao usuário).
- */
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {

@@ -15,14 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * REQ003: listar livros do usuário logado.
- * REQ004: categorizar por status.
- * REQ005/006/007: adicionar, excluir e atualizar livros.
- * RNF003: só o dono pode editar/excluir.
- * RNF006: listagem paginada.
- * RNF011: livro sempre vinculado a um usuário.
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -51,7 +43,7 @@ public class BookService {
                 .sinopse(request.sinopse())
                 .urlCapa(request.urlCapa())
                 .status(request.status())
-                .user(currentUser) // RNF011: vínculo obrigatório com o usuário
+                .user(currentUser)
                 .build();
 
         Book saved = bookRepository.save(book);

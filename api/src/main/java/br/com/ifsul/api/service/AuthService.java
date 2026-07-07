@@ -15,10 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * REQ001: cadastro de usuário.
- * REQ002: login/autenticação.
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -38,7 +34,7 @@ public class AuthService {
         User user = User.builder()
                 .nome(request.nome())
                 .email(request.email())
-                .senha(passwordEncoder.encode(request.senha())) // RNF001: senha criptografada
+                .senha(passwordEncoder.encode(request.senha()))
                 .build();
 
         User savedUser = userRepository.save(user);

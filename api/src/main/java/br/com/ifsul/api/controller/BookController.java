@@ -21,7 +21,6 @@ public class BookController {
 
     private final BookService bookService;
 
-    // REQ003 / REQ004 / RNF006: listagem paginada e filtrável por status
     @GetMapping
     public ResponseEntity<Page<BookResponse>> listMyBooks(
             @RequestParam(required = false) BookStatus status,
@@ -31,13 +30,11 @@ public class BookController {
         return ResponseEntity.ok(bookService.listMyBooks(status, pageable));
     }
 
-    // REQ005
     @PostMapping
     public ResponseEntity<BookResponse> addBook(@Valid @RequestBody BookRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookService.addBook(request));
     }
 
-    // REQ007
     @PutMapping("/{id}")
     public ResponseEntity<BookResponse> updateBook(
             @PathVariable Long id,
@@ -46,7 +43,6 @@ public class BookController {
         return ResponseEntity.ok(bookService.updateBook(id, request));
     }
 
-    // REQ006
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);

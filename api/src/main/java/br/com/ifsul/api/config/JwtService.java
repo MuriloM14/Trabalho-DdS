@@ -11,9 +11,6 @@ import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.function.Function;
 
-/**
- * RNF001: geração e validação de tokens JWT para autenticação segura.
- */
 @Service
 public class JwtService {
 

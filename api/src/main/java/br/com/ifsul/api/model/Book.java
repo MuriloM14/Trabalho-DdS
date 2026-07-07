@@ -8,10 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-/**
- * Livro pertencente a um usuário.
- * RNF011: um livro nunca existe sem um usuário dono (user_id not null).
- */
 @Entity
 @Table(name = "books")
 @Data

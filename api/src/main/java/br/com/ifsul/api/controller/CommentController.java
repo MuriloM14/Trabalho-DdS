@@ -19,7 +19,6 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    // REQ010: comentar em publicações de outro usuário
     @PostMapping("/api/posts/{postId}/comments")
     public ResponseEntity<CommentResponse> addComment(
             @PathVariable Long postId,
@@ -37,7 +36,6 @@ public class CommentController {
         return ResponseEntity.ok(commentService.listByPost(postId, pageable));
     }
 
-    // REQ011 / REQ013 / RNF013
     @DeleteMapping("/api/comments/{commentId}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
         commentService.deleteComment(commentId);

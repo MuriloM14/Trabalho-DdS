@@ -43,8 +43,6 @@ public class User implements UserDetails {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    // ---- Spring Security (UserDetails) ----
-
     @Override
     @Transient
     public Collection<? extends GrantedAuthority> getAuthorities() {

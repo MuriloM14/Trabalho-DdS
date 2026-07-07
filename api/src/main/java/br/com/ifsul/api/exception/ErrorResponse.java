@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * RNF009: mensagens amigáveis e padronizadas de erro para o cliente.
- */
 @Data
 @Builder
 @NoArgsConstructor
