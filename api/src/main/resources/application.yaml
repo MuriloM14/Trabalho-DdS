@@ -1,3 +1,27 @@
 spring:
   application:
     name: api
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/livros_db?createDatabaseIfNotExist=true&useTimezone=true&serverTimezone=UTC
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+server:
+  port: 8080
+
+app:
+  jwt:
+    # Em produção, mover para variável de ambiente
+    secret: "MinhaChaveSecretaSuperLongaParaAssinarTokensJWTComSeguranca123456"
+    expiration-ms: 86400000 # 24 horas
