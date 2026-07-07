@@ -1,0 +1,55 @@
+<section class="panel profile-panel" [class.visited-profile]="selectedProfile && !isOwnProfile">
+  <div class="panel-heading">
+    <p class="section-kicker">{{ profileContext }}</p>
+    <h2>{{ profileTitle }}</h2>
+  </div>
+
+  <p class="section-error" *ngIf="profileError">{{ profileError }}</p>
+  <p class="section-loading" *ngIf="profileLoading">Carregando perfil...</p>
+
+  <div *ngIf="selectedProfile && !profileLoading; else noProfileSelected" class="profile-card">
+    <div class="profile-avatar">{{ getProfileInitial() }}</div>
+
+    <div class="profile-copy">
+      <h3>{{ selectedProfile.nome }}</h3>
+      <p class="profile-tag">
+        {{ isOwnProfile ? 'Este e o seu perfil' : 'Voce esta visitando este perfil' }}
+      </p>
+      <p class="profile-bio">
+        {{ selectedProfile.bio || 'Sem bio.' }}
+      </p>
+    </div>
+
+    <details class="profile-posts" open>
+      <summary>
+        <span>{{ postsTitle }}</span>
+        <strong>{{ profilePostsPage.totalElements }}</strong>
+      </summary>
+
+      <article class="profile-post-card" *ngFor="let post of profilePostsPage.content; trackBy: trackById">
+        <p>{{ post.conteudo }}</p>
+        <div class="profile-post-meta">
+          <span>{{ post.createdAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+          <span>{{ post.totalComentarios }} comentarios</span>
+        </div>
+      </article>
+
+      <div class="empty-state compact-empty" *ngIf="profilePostsPage.empty">
+        <p>Este perfil ainda nao tem publicacoes.</p>
+      </div>
+
+      <app-pagination
+        [page]="profilePostsPage"
+        [compact]="true"
+        (pageChange)="postsPageChange.emit($event)"
+      ></app-pagination>
+    </details>
+  </div>
+
+  <ng-template #noProfileSelected>
+    <div class="empty-state profile-empty" *ngIf="!profileLoading">
+      <h3>Nenhum perfil aberto</h3>
+      <p>Toque em um nome no feed.</p>
+    </div>
+  </ng-template>
+</section>

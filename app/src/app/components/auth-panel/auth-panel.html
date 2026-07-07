@@ -1,0 +1,82 @@
+<section class="panel auth-panel">
+  <div class="auth-intro">
+    <p class="section-kicker">Clube de leitura</p>
+    <h1>Minhas Leituras</h1>
+    <p>Organize seus livros, registre opinioes e acompanhe publicacoes de outros leitores.</p>
+  </div>
+
+  <div class="auth-tabs">
+    <button
+      type="button"
+      class="tab-button"
+      [class.tab-button-active]="authMode === 'login'"
+      (click)="setMode('login')"
+    >
+      Entrar
+    </button>
+    <button
+      type="button"
+      class="tab-button"
+      [class.tab-button-active]="authMode === 'register'"
+      (click)="setMode('register')"
+    >
+      Criar conta
+    </button>
+  </div>
+
+  <div class="panel-heading">
+    <h2>{{ authMode === 'login' ? 'Acesse sua conta' : 'Criar conta' }}</h2>
+  </div>
+
+  <form #authFormRef="ngForm" class="form-grid" novalidate (ngSubmit)="onSubmit(authFormRef)">
+    <div class="field" *ngIf="authMode === 'register'">
+      <label for="nome">Nome</label>
+      <input
+        id="nome"
+        type="text"
+        name="nome"
+        [(ngModel)]="authForm.nome"
+        minlength="2"
+        required
+        placeholder="Seu nome completo"
+      />
+    </div>
+
+    <div class="field">
+      <label for="email">E-mail</label>
+      <input
+        id="email"
+        type="email"
+        name="email"
+        [(ngModel)]="authForm.email"
+        required
+        placeholder="voce@email.com"
+      />
+    </div>
+
+    <div class="field">
+      <label for="senha">Senha</label>
+      <input
+        id="senha"
+        type="password"
+        name="senha"
+        [(ngModel)]="authForm.senha"
+        minlength="6"
+        required
+        placeholder="Sua senha"
+      />
+    </div>
+
+    <button type="submit" class="primary-button wide-button" [disabled]="authLoading || authFormRef.invalid">
+      {{
+        authLoading
+          ? authMode === 'login'
+            ? 'Entrando...'
+            : 'Criando conta...'
+          : authMode === 'login'
+            ? 'Entrar na plataforma'
+            : 'Criar conta'
+      }}
+    </button>
+  </form>
+</section>

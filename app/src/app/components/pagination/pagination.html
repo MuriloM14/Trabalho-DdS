@@ -1,0 +1,9 @@
+<div class="pager" [class.compact-pager]="compact" *ngIf="page.totalPages > 1">
+  <button type="button" class="ghost-button" [disabled]="page.first" (click)="pageChange.emit(page.number - 1)">
+    Anterior
+  </button>
+  <span>Pagina {{ page.number + 1 }} de {{ page.totalPages }}</span>
+  <button type="button" class="ghost-button" [disabled]="page.last" (click)="pageChange.emit(page.number + 1)">
+    Proxima
+  </button>
+</div>
