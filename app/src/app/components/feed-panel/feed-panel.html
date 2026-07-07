@@ -1,0 +1,162 @@
+<section class="panel feed-panel">
+  <div class="panel-heading panel-heading-inline">
+    <div>
+      <p class="section-kicker">Comunidade</p>
+      <h2>Feed</h2>
+    </div>
+
+    <div class="mini-summary">
+      <strong>{{ feedPage.totalElements }}</strong>
+      <span>publicacoes</span>
+    </div>
+  </div>
+
+  <div class="composer-box">
+    <div class="action-heading">
+      <p class="section-kicker">Escrever</p>
+      <h3>Nova publicacao</h3>
+    </div>
+
+    <form #postFormRef="ngForm" class="post-form" novalidate (ngSubmit)="onSubmitPost(postFormRef)">
+      <div class="field">
+        <textarea
+          id="conteudoPost"
+          name="conteudo"
+          rows="3"
+          [ngModel]="postContent"
+          (ngModelChange)="onPostContentChange($event)"
+          maxlength="2000"
+          required
+          placeholder="O que voce leu, releu ou quer comentar hoje?"
+        ></textarea>
+      </div>
+
+      <div class="form-footer">
+        <span>{{ postContent.length }}/2000 caracteres</span>
+        <button type="submit" class="primary-button" [disabled]="postSaving || postFormRef.invalid">
+          {{ postSaving ? 'Publicando...' : 'Publicar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <p class="section-error" *ngIf="feedError">{{ feedError }}</p>
+  <p class="section-loading" *ngIf="feedLoading">Carregando feed...</p>
+
+  <div class="post-list" *ngIf="!feedLoading">
+    <article class="post-card" *ngFor="let post of feedPage.content; trackBy: trackById">
+      <div class="post-header">
+        <div>
+          <button type="button" class="profile-link" (click)="profileOpen.emit(post.userId)">
+            {{ post.autorNome }}
+          </button>
+          <p>{{ post.createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
+        </div>
+
+        <div class="post-actions">
+          <button
+            type="button"
+            class="visit-profile-button"
+            *ngIf="!canDeletePost(post)"
+            (click)="profileOpen.emit(post.userId)"
+          >
+            Ver perfil
+          </button>
+          <button
+            type="button"
+            class="ghost-button danger-button"
+            *ngIf="canDeletePost(post)"
+            (click)="removePost.emit(post)"
+          >
+            Excluir
+          </button>
+        </div>
+      </div>
+
+      <p class="post-content">{{ post.conteudo }}</p>
+
+      <div class="post-meta">
+        <span>{{ post.totalComentarios }} comentario(s)</span>
+        <button type="button" class="comments-button" (click)="togglePostComments.emit(post.id)">
+          {{ isCommentsOpen(post.id) ? 'Ocultar comentarios' : 'Comentarios' }}
+        </button>
+      </div>
+
+      <div class="comment-box" *ngIf="isCommentsOpen(post.id)">
+        <div class="comment-box-heading">
+          <h3>Comentarios</h3>
+          <span>{{ post.totalComentarios }}</span>
+        </div>
+
+        <form #commentFormRef="ngForm" class="comment-form" novalidate (ngSubmit)="onSubmitComment(post, commentFormRef)">
+          <div class="field">
+            <label [for]="'comment-' + post.id">Adicionar comentario</label>
+            <textarea
+              [id]="'comment-' + post.id"
+              rows="2"
+              maxlength="1000"
+              required
+              [name]="'comment' + post.id"
+              [ngModel]="getCommentDraft(post.id)"
+              (ngModelChange)="onCommentDraftChange(post.id, $event)"
+              placeholder="Escreva seu comentario"
+            ></textarea>
+          </div>
+
+          <div class="form-footer">
+            <span>{{ getCommentDraft(post.id).length }}/1000 caracteres</span>
+            <button
+              type="submit"
+              class="primary-button"
+              [disabled]="commentsLoading[post.id] || !getCommentDraft(post.id).trim()"
+            >
+              Comentar
+            </button>
+          </div>
+        </form>
+
+        <p class="section-error" *ngIf="commentErrors[post.id]">{{ commentErrors[post.id] }}</p>
+        <p class="section-loading" *ngIf="commentsLoading[post.id]">Atualizando comentarios...</p>
+
+        <div class="comment-list" *ngIf="!commentsLoading[post.id]">
+          <article class="comment-card" *ngFor="let comment of getComments(post.id); trackBy: trackById">
+            <div class="comment-header">
+              <button type="button" class="profile-link small-link" (click)="profileOpen.emit(comment.autorId)">
+                {{ comment.autorNome }}
+              </button>
+              <span>{{ comment.createdAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+
+            <p>{{ comment.conteudo }}</p>
+
+            <button
+              type="button"
+              class="ghost-button danger-button align-left"
+              *ngIf="canDeleteComment(comment, post)"
+              (click)="removeComment.emit({ comment, post })"
+            >
+              Excluir comentario
+            </button>
+          </article>
+
+          <div class="empty-state compact-empty" *ngIf="getCommentPage(post.id).empty">
+            <p>Nenhum comentario ainda.</p>
+          </div>
+        </div>
+
+        <app-pagination
+          [page]="getCommentPage(post.id)"
+          [compact]="true"
+          (pageChange)="commentsPageChange.emit({ postId: post.id, page: $event })"
+        ></app-pagination>
+      </div>
+    </article>
+
+    <div class="empty-state" *ngIf="feedPage.empty">
+      <h3>O feed esta vazio</h3>
+      <p>Publique a primeira mensagem.</p>
+    </div>
+  </div>
+
+  <app-pagination [page]="feedPage" (pageChange)="feedPageChange.emit($event)"></app-pagination>
+</section>

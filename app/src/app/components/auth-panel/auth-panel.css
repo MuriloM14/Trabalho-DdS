@@ -1,0 +1,150 @@
+:host {
+  display: block;
+}
+
+.panel {
+  padding: 1.25rem;
+  border-radius: 18px;
+  background: var(--surface-strong-color);
+  border: 1px solid var(--border-color);
+}
+
+.auth-panel {
+  align-self: start;
+}
+
+.auth-intro {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(30, 72, 80, 0.1);
+}
+
+.section-kicker {
+  margin: 0 0 0.55rem;
+  color: #2f6f9f;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.auth-intro h1 {
+  margin: 0;
+  color: var(--title-color);
+  font-size: 1.8rem;
+  line-height: 1.1;
+}
+
+.auth-intro p:not(.section-kicker) {
+  margin: 0.65rem 0 0;
+  color: var(--muted-color);
+  line-height: 1.55;
+}
+
+.auth-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.25rem;
+  padding: 0.25rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  background: #eef4f1;
+}
+
+.tab-button,
+.primary-button {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.tab-button {
+  padding: 0.7rem 0.85rem;
+  border-radius: 9px;
+  color: var(--muted-color);
+  background: transparent;
+  font-weight: 600;
+}
+
+.tab-button-active {
+  background: #ffffff;
+  color: var(--title-color);
+  box-shadow: 0 6px 14px rgba(19, 37, 43, 0.06);
+}
+
+.panel-heading {
+  margin-bottom: 1rem;
+}
+
+.panel-heading h2 {
+  margin: 0;
+  color: var(--title-color);
+  line-height: 1.12;
+  font-size: 1.35rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.field label {
+  color: var(--title-color);
+  font-size: 0.94rem;
+  font-weight: 600;
+}
+
+.field input {
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid rgba(30, 72, 80, 0.15);
+  border-radius: 10px;
+  background: #ffffff;
+  color: var(--text-color);
+  font: inherit;
+  outline: none;
+}
+
+.field input:focus {
+  border-color: rgba(31, 115, 118, 0.46);
+  box-shadow: 0 0 0 4px rgba(31, 115, 118, 0.12);
+}
+
+.primary-button {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  background: #285f5b;
+  color: #ffffff;
+  font-weight: 700;
+  justify-content: center;
+}
+
+.tab-button:hover,
+.primary-button:hover {
+  transform: translateY(-1px);
+}
+
+.primary-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+@media (max-width: 640px) {
+  .panel {
+    padding: 1rem;
+    border-radius: 16px;
+  }
+}

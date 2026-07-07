@@ -1,0 +1,167 @@
+<section class="panel books-panel" [class.library-mode]="mode === 'library'">
+  <div class="panel-heading panel-heading-inline">
+    <div>
+      <p class="section-kicker">Estante</p>
+      <h2>{{ mode === 'library' ? 'Seus livros' : 'Meus Livros' }}</h2>
+    </div>
+
+    <div class="mini-summary">
+      <strong>{{ booksPage.totalElements }}</strong>
+      <span>na lista</span>
+    </div>
+  </div>
+
+  <button type="button" class="library-button" *ngIf="mode === 'shortcut'" (click)="libraryOpen.emit()">
+    Ir para estante
+  </button>
+
+  <div class="editor-shell" *ngIf="mode === 'library'">
+    <div class="editor-heading">
+      <span>{{ editingBookId ? 'Editando livro' : 'Adicionar livro' }}</span>
+      <small>{{ editingBookId ? 'Atualize os dados abaixo' : 'Cadastre um livro na sua estante' }}</small>
+    </div>
+
+    <form #bookFormRef="ngForm" class="book-form" novalidate (ngSubmit)="onSubmit(bookFormRef)">
+      <div class="form-grid two-columns">
+        <div class="field">
+          <label for="titulo">Titulo</label>
+          <input
+            id="titulo"
+            type="text"
+            name="titulo"
+            [(ngModel)]="bookForm.titulo"
+            required
+            placeholder="Ex.: Dom Casmurro"
+          />
+        </div>
+
+        <div class="field">
+          <label for="autor">Autor</label>
+          <input
+            id="autor"
+            type="text"
+            name="autor"
+            [(ngModel)]="bookForm.autor"
+            placeholder="Ex.: Machado de Assis"
+          />
+        </div>
+
+        <div class="field">
+          <label for="status">Status</label>
+          <select id="status" name="status" [(ngModel)]="bookForm.status" required>
+            <option *ngFor="let option of bookStatusOptions" [ngValue]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="urlCapa">Capa</label>
+          <input
+            id="urlCapa"
+            type="url"
+            name="urlCapa"
+            [(ngModel)]="bookForm.urlCapa"
+            placeholder="Link da imagem"
+          />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="sinopse">Nota</label>
+        <textarea
+          id="sinopse"
+          name="sinopse"
+          rows="2"
+          [(ngModel)]="bookForm.sinopse"
+          placeholder="Algo que voce quer lembrar"
+        ></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="primary-button" [disabled]="bookSaving || bookFormRef.invalid">
+          {{
+            bookSaving
+              ? editingBookId
+                ? 'Salvando...'
+                : 'Adicionando...'
+              : editingBookId
+                ? 'Salvar alteracoes'
+                : 'Adicionar livro'
+          }}
+        </button>
+
+        <button type="button" class="ghost-button" *ngIf="editingBookId" (click)="onCancelEdit(bookFormRef)">
+          Cancelar edicao
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="toolbar" *ngIf="mode === 'library'">
+    <div class="field compact-field">
+      <label for="filtroStatus">Filtrar</label>
+      <select
+        id="filtroStatus"
+        name="filtroStatus"
+        [ngModel]="selectedBookStatus"
+        (ngModelChange)="onBookStatusChange($event)"
+      >
+        <option *ngFor="let option of bookStatusFilters" [ngValue]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <p class="section-error" *ngIf="booksError && mode === 'library'">{{ booksError }}</p>
+  <p class="section-loading" *ngIf="booksLoading && mode === 'library'">Carregando livros...</p>
+
+  <div class="book-list" *ngIf="mode === 'library' && !booksLoading">
+    <article class="book-card" *ngFor="let book of booksPage.content; trackBy: trackById">
+      <div class="book-cover" *ngIf="book.urlCapa; else bookFallback">
+        <img [src]="book.urlCapa" [alt]="'Capa de ' + book.titulo" />
+      </div>
+
+      <ng-template #bookFallback>
+        <div class="book-cover book-cover-fallback">
+          {{ book.titulo.charAt(0).toUpperCase() }}
+        </div>
+      </ng-template>
+
+      <div class="book-content">
+        <div class="book-card-header">
+          <div>
+            <h3>{{ book.titulo }}</h3>
+            <p>{{ book.autor || 'Autor nao informado' }}</p>
+          </div>
+          <span class="status-chip" [ngClass]="statusClass(book.status)">
+            {{ statusLabels[book.status] }}
+          </span>
+        </div>
+
+        <p class="book-description">
+          {{ book.sinopse || 'Sem anotacao.' }}
+        </p>
+
+        <div class="card-actions">
+          <button type="button" class="secondary-button" (click)="editBook.emit(book)">Editar</button>
+          <button type="button" class="ghost-button danger-button" (click)="removeBook.emit(book)">
+            Excluir
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <div class="empty-state" *ngIf="booksPage.empty">
+      <h3>Nenhum livro encontrado</h3>
+      <p>Adicione um livro ou ajuste o filtro.</p>
+    </div>
+  </div>
+
+  <app-pagination
+    *ngIf="mode === 'library'"
+    [page]="booksPage"
+    (pageChange)="pageChange.emit($event)"
+  ></app-pagination>
+</section>

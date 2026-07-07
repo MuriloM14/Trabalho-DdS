@@ -1,0 +1,18 @@
+<header class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Clube de leitura</p>
+    <h1>Minhas Leituras</h1>
+  </div>
+
+  <div class="hero-card" *ngIf="currentUser">
+    <h2>{{ currentUser.nome }}</h2>
+    <p>{{ booksTotal }} livros · {{ feedTotal }} publicacoes</p>
+
+    <div class="hero-actions">
+      <button type="button" class="secondary-button" (click)="profileOpen.emit(currentUser.userId)">
+        Ver meu perfil
+      </button>
+      <button type="button" class="ghost-button" (click)="logoutUser.emit()">Sair</button>
+    </div>
+  </div>
+</header>
