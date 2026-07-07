@@ -5,6 +5,7 @@ import br.com.ifsul.api.dto.comment.CommentResponse;
 import br.com.ifsul.api.service.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -30,6 +31,7 @@ public class CommentController {
     @GetMapping("/api/posts/{postId}/comments")
     public ResponseEntity<Page<CommentResponse>> listComments(
             @PathVariable Long postId,
+            @ParameterObject
             @PageableDefault(size = 10) Pageable pageable
     ) {
         return ResponseEntity.ok(commentService.listByPost(postId, pageable));

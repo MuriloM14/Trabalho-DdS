@@ -5,6 +5,7 @@ import br.com.ifsul.api.dto.post.PostResponse;
 import br.com.ifsul.api.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -21,7 +22,10 @@ public class PostController {
 
     // Feed geral, paginado (RNF006)
     @GetMapping
-    public ResponseEntity<Page<PostResponse>> listFeed(@PageableDefault(size = 10) Pageable pageable) {
+    public ResponseEntity<Page<PostResponse>> listFeed(
+            @ParameterObject
+            @PageableDefault(size = 10) Pageable pageable
+    ) {
         return ResponseEntity.ok(postService.listFeed(pageable));
     }
 
@@ -29,6 +33,7 @@ public class PostController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<Page<PostResponse>> listByUser(
             @PathVariable Long userId,
+            @ParameterObject
             @PageableDefault(size = 10) Pageable pageable
     ) {
         return ResponseEntity.ok(postService.listByUser(userId, pageable));
